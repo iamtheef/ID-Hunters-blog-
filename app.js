@@ -203,7 +203,7 @@ app.post("/show/:id/edit", isLoggedIn, function (req,res){
 //SEARCH ============================================================================
 
 app.get ("/search", function(req,res){
-	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=64ad4434cae54ab19bfd65d7ac246e09&format=json&album="+req.query.term, function(error, response, body){
+	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=<key_removed>&format=json&album="+req.query.term, function(error, response, body){
 		if(!error && response.statusCode == 200){
 			var data = JSON.parse(body)
 			res.render ("search", {data: data});
@@ -211,15 +211,6 @@ app.get ("/search", function(req,res){
 	});
 });
 
-// app.get ("/searchShow", function(req,res){
-// 	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=64ad4434cae54ab19bfd65d7ac246e09&format=json&album="+req.query.term, function(error, response, body){
-// 		if(!error && response.statusCode == 200){
-// 			var data = JSON.parse(body)
-// 			res.render ("searchShow", {data: data});
-// 		}
-// 	});
-// });
-	
 
 //SHOW PAGE =========================================================================
 
