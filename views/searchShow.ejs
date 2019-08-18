@@ -1,0 +1,43 @@
+<%include header%>
+
+<div class="container">
+	<div class="row">
+		<div class="col-6 px-0 mx-0">
+			<img src="<%= data["results"]["albummatches"]["album"]["image"][0]["#text"]%>">
+		</div>
+		<div class="col-6">
+			<h1 class="text-center"><span class="artist"><%= data["results"]["albummatches"]["album"]["artist"]%></span> - <%= data["results"]["albummatches"]["album"]["name"]%></h1> 
+			<p class="content pl-5"> No Description found</p>
+			<a href="<%= data["results"]["albummatches"]["album"]["url"]%>">
+			<button class="btn btn btn-outline-dark mt-5" style="width: 70%; 
+					margin-left: 100px;">Buy Here</button>
+					</a>
+		</div>
+	</div>
+	
+	<hr>
+		
+		<% post.comments.forEach(function(com){ %>
+		<div class="comDiv">
+			<p class="author"><strong>Name</strong></p>
+			<p class="comment"><%= com.text %></p>
+			</div>
+
+		<%});%>
+
+		<form action="/show/<%=post._id%>/comment" method="POST">
+		<div class="row">
+			<input type="text" name="comment" placeholder="Add new comment..."
+			style="width: 1000px; margin-left:10px; " >
+		</div>
+		<div class="row">
+			<button class="btn btn btn-outline-dark mt-5" style="width: 15%; 
+						margin-left: 10px;">Add new comment</button>
+		</div>
+		</form>
+</div>
+
+
+<hr style="margin-bottom: 50px;">
+
+<%include footer%>

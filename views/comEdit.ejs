@@ -1,0 +1,47 @@
+<%include header%>
+
+
+<div class="container">
+	<div class="row align-items">
+		<div class="col-md-6 order-1 mb-3 order-lg-1">
+			<img src="<%= post.image%>" class="img-fluid">
+		</div>
+		<div class="col-md-6 order-1 order-lg-2 pl-4">
+			<h1 class="text-center"><span class="artist"><%= post.artist%></span> - <%= post.title%></h1> 
+			<p class="content order-lg-3"> <%= post.content%></p>
+			<button class="btn btn btn-outline-dark mt-5" style="width: 70%; 
+					margin-left: 60px;">Buy Here</button>
+		</div>
+	</div>
+	
+	<hr>
+		
+		<% post.comments.forEach(function(com){ %>
+			<div class="mb-3" style="margin-left: -5px;">
+				<p class="author"><strong><%=com.user%></strong></p>
+				<p class="comment"style="margin-bottom: 0px;"><%= com.text %></p>
+			</div>
+		<%});%>
+
+			<form action="/show/<%=post._id%>/comments/<%=foundCom._id%>/edit" 
+				method="POST">
+			<textarea name="comment[text]" style="width: 100%;" rows="3"><%= foundCom.text%></textarea>
+			<input type="image" class="btTxt submit" 
+				   style="height: 15px; width: 15px; margin-left:5px; margin-bottom: -3px;" 
+				   src="http://cdn.onlinewebfonts.com/svg/img_259025.png">
+			   <a href="/show/<%=post._id%>">
+		   		<img src="https://cdn3.iconfinder.com/data/icons/sympletts-free-sampler/128/circle-close-512.png" 
+		   		style="height: 20px; width: 20px; margin-left: 4px;">
+		   		</a>
+			</form>
+			
+		
+	</div>
+</div>
+
+
+
+
+<hr style="margin-bottom: 50px;">
+
+<%include footer%>

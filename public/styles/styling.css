@@ -1,0 +1,159 @@
+.carousel-item {
+	max-width: 100%;
+	overflow: hidden;
+	max-height: 600px;
+}
+
+.carousel-item img {
+width: 80%;
+height: 550px;
+}
+.divider {
+	border-bottom: 1.1px solid black;
+	min-width: 1000px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+
+}
+.divider a {
+		color: black;	
+		color: #4f4c4c;
+}
+.divider a:hover {	
+		color: #4f4c4c;
+		text-decoration-style: none;
+}
+
+.navbar {
+	font-family: 'Lexend Exa', sans-serif;
+
+}
+
+.navbar-collapse {
+	margin-left: 20px;
+}
+
+.wlc{
+	font-size: 46px;
+	font-weight: lighter;
+
+}
+.wlc2{
+	font-size: 30px;
+	font-weight: lighter;
+
+}
+.carouselle{
+	padding-bottom: 100px;
+
+}
+
+.section{
+	margin-bottom: 100px ;
+	margin-left: 0px;
+}
+p {
+  text-align: left;
+}
+
+.section a:hover { 
+  color: #4f4c4c;
+}
+
+.section a{ 
+  color: #303032;
+}
+
+@media only screen and (min-width : 1224px) {
+	.searchbox:focus {
+ 	 width: 460%;
+	}
+}
+
+
+
+
+input[type=text] {
+	float:right;
+	box-sizing: border-box;
+  width: 150px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  border-style: solid;
+}
+input[type=password] {
+	float:right;
+	box-sizing: border-box;
+  width: 150px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  border-style: solid;
+}
+
+
+.content{
+	margin-left: 30px;
+	margin-top: 30px;
+	font-size: 25px;
+	font-weight: lighter;
+	line-height: 1,1;
+	text-align: left;
+}
+.content2{
+	margin-left: 30px;
+	margin-top: 30px;
+	font-size: 25px;
+	font-weight: lighter;
+	line-height: 0.9;
+	text-align: left;
+}
+.artist {
+	border-bottom : 0.5px solid black;
+}
+.page-footer {
+	background-color: #bfbfbf;	
+}
+.page-footer  a {
+	color: black;	
+}
+
+.page-footer  a:hover {
+	color: #4f4c4c;
+}
+
+.comment{
+	margin-left: 10px;
+	font-size: 20px;
+	font-weight: lighter;
+	line-height: 0.9;
+	text-align: left;
+}
+
+.author{
+	margin-left: 2px;
+	margin-bottom: 0px;
+	font-size: 20px;
+	
+}
+
+.comDiv{
+	border-left: 2px solid black;
+	margin-top: 10px;
+}
+
+input[type=text], input[type=password], textarea:focus{
+	outline: none;
+}
+
+
+.editDiv {
+	overflow:scroll;
+	min-width: 100%; ;
+	min-height: : 100% !important;
+	display:inline-block ; 
+}
+
+
+
+
+

@@ -1,0 +1,77 @@
+<%include header%>
+
+
+<div class="container">
+	<div class="row align-items">
+		<div class="col-md-6 order-1 mb-3 order-lg-1">
+			<img src="<%= post.image%>" class="img-fluid">
+		</div>
+		<div class="col-md-6 order-1 order-lg-2 pl-4">
+			<h1 class="text-center"><span class="artist"><%= post.artist%></span> - <%= post.title%></h1> 
+			<p class="content order-lg-3"> <%= post.content%></p>
+			<button class="btn btn btn-outline-dark mt-5" style="width: 70%; 
+					margin-left: 60px;">Buy Here</button>
+		</div>
+	</div>
+	
+	<hr>
+		
+		<% post.comments.forEach(function(com){ %>
+			<div class="comDiv mb-3" style="margin-left: -5px;">
+				<p class="author"><strong><%=com.user%></strong></p>
+				<p class="comment"style="margin-bottom: 0px;"><%= com.text %></p>
+				
+	<% if(currentUser && com.userID == (currentUser._id) || currentUser && currentUser.isAdmin){ %>
+
+					<a href="/show/<%=post._id%>/comments/<%=com._id%>/edit">
+						<img src="https://cdn2.iconfinder.com/data/icons/education-2-45/48/71-512.png" style="height: 12px; width: 12px; margin-left:10px; position: relative;">
+					</a>
+				
+					<form action="/show/<%=post._id%>/comments/<%=com._id%>/delete" method="POST" 
+							style="margin-top: -22px;">
+					<input type="image" class="btTxt submit" src="https://cdn2.iconfinder.com/data/icons/apple-inspire-white/100/Apple-64-512.png" 
+					   style="height: 12px; width: 12px; margin-left:35px;">
+			   		</form>
+		<%}%>
+
+			</div>
+		<%});%>
+
+				<form action="/show/<%=post._id%>/comment" method="POST" class="mt-5">
+			<%if (currentUser){%>
+					<div class="row">
+						<input type="text" name="comment" placeholder=" Add new comment..."
+						style="width: 90%; margin-left:10px; border: 0.5px solid black; border-top : none; border-right: none; border-left:none;" >
+							<button class="btn btn btn-outline-dark mt-3 mb-4" style="width: 200px; 
+							margin-left: 10px; ">Add new comment</button>
+					</div>
+				</form>
+			<%}%>
+
+
+<% if(currentUser && post.authorID == (currentUser._id) || (currentUser && currentUser.isAdmin)){%>
+			<div class="row align-items-inline pl-2">
+				<form action="/show/<%= post._id%>" method="POST">
+					<div style="margin-top: 10px"><button class="btn btn-dark mr-2"> Delete</button></div>
+				</form>
+				<form action="/show/<%=post._id%>/edit" method="GET">
+					<div style="margin-top: 10px"><button class="btn btn-outline-dark mr-1"> Edit
+					</button>
+					</div>
+				</form>
+			</div>
+		<%}%>
+
+
+			<div class="row pl-2">
+			<div style="margin-top: 20px;"><a href="/">
+				<button class="btn btn-outline-dark"> <</button></a></div>
+		</div>
+</div>
+
+
+
+
+<hr style="margin-bottom: 50px;">
+
+<%include footer%>

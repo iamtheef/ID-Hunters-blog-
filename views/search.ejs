@@ -1,0 +1,26 @@
+<%include header%>
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-6">
+				<% data["results"]["albummatches"]["album"].forEach(function(post){ %>
+					<div class="divider">
+							<li>
+								<a href="<%=post["url"]%>"><h2 style="font-size: 40px;
+								font-weight: lighter;"><%= post["name"]%></h2></a>	
+							</li>
+							<h5><%= post["artist"]%></h5>
+							<img class="img-thumbnail" rel="Responsive-image" 
+							src="<%= post["image"][3]["#text"] %>" style="margin-bottom:20px;">
+					</div>
+				<%});%>
+				
+			</div>
+		</div>
+	</div>
+
+<a href="/" class="btn btn-outline-dark" style="margin-bottom: 10px; margin-top: 5px; margin-left: 158px;">Go back</a>
+			
+<%include footer%>
+
+		
