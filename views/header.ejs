@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand navbar-light bg-light">
+<nav class="navbar navbar-expand navbar-light bg-light sticky-top">
   <a class="navbar-brand" href="/">The Vinyl DB</a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
@@ -42,4 +42,19 @@
      </div>
   </div>
 </nav>
+
+<div class="container">
+  <% if (error && error.length>0){ %>
+  <div class="alert alert-dark" role="alert">
+    <%= error%>
+  </div>
+  <%}%>
+  
+  <% if (success && success.length>0){ %>
+  <div class="alert alert-secondary" role="alert">
+    <%= success%>
+  </div>
+  <%}%>
+  
+</div>
 

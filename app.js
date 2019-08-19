@@ -8,11 +8,13 @@ var app = express();
 var passport = require("passport");
 var bodyParser  = require("body-parser");
 var mongoose = require ("mongoose");
+var flash = require("connect-flash");
 var LocalStrategy = require("passport-local");
 var Post = require ("./models/post");
 var Comment = require("./models/comment");
 var User = require("./models/user");
-var sessions = require("client-sessions")
+var sessions = require("client-sessions");
+
 
 
 
@@ -22,6 +24,7 @@ mongoose.connect('mongodb://localhost/blogApp_DB', {useNewUrlParser: true });
 app.use(express.static(__dirname + '/public/'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set ("view engine", "ejs");
+app.use(flash());
 
 
 
@@ -30,8 +33,9 @@ app.set ("view engine", "ejs");
 
 app.use(require("express-session")({
 	secret: "Prince of Denmark is dead.",
-	resave: false,
-	saveUninitialized: false
+	resave: true,
+	saveUninitialized: true,
+	cookie:{secured: true}
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,6 +45,8 @@ passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
 	next();
+	res.locals.error = req.flash("error");
+	res.locals.success = req.flash("success");
 });
 
 
@@ -73,9 +79,11 @@ app.post("/register", function(req, res){
 	User.register(newUser, req.body.password, function(err, user){
 		if (err){
 			console.log(err);
+			req.flash("error", "There was an error! Please try again.");
 			return res.redirect("/register");
 		}
 		passport.authenticate("local")(req,res, function(){
+			req.flash("success", "Welcome the the Vinyl DB");
 			res.redirect("/");
 		});
 	});
@@ -85,23 +93,26 @@ app.post("/register", function(req, res){
 
 //login & logout =====
 
+
 app.post("/login", passport.authenticate("local", {
 	successRedirect : "/",
-	failureRedirect : "/login"
+	failureRedirect : "/login",
+	successFlash: "Welcome back!",
+	failureFlash: "Something went wrong, try again."
 }), function(req, res){	
 });
 
 function isLoggedIn (req,res,next){
 	if(req.isAuthenticated()){
 		return next();
-	}else {
-		res.redirect("/login");
 	}
+		res.redirect("/login");
 }
 
 
 app.post("/logout", function(req,res){
 	req.logout();
+	req.flash("success", "See you later :)")
 	res.redirect("/");
 });
 
@@ -111,6 +122,7 @@ app.post("/logout", function(req,res){
 app.get("/", function(req, res){
 	Post.find({}, function(err, allPosts){
 		if (err){
+			req.flash("error", err.message);
 			console.log (err);
 		} else {
 			res.render("landing", {posts: allPosts});
@@ -121,17 +133,17 @@ app.get("/", function(req, res){
 
 
 //under construction
-app.get ("/UC", function(req,res){
-	res.render("UC")
+app.get ("/UC", isLoggedIn, function(req,res){
+	res.render("UC");
 });
 
 
 
 // CREATE & DELETE ================================================================
 
-
 app.get ("/new", isLoggedIn, function (req, res){
-	res.render("new")
+	res.render("new");
+
 });
 
 
@@ -145,13 +157,15 @@ app.post("/new", isLoggedIn, function (req,res) {
 		title: req.body.title,
 		image: req.body.image,
 		content: req.body.content
-		
 	}
+
 	Post.create (newPost, function(err, post){
 		if (err){
 			console.log (err);
+			req.flash("error", err.message);
 			res.render("new");
 		}else{
+			req.flash("success", "Post successfuly created!")
 			res.redirect("/");
 		}
 	});
@@ -163,9 +177,10 @@ app.post ("/show/:id", isLoggedIn, function(req, res){
 	Post.findByIdAndRemove(req.params.id, function(err){
 		if (err){
 			console.log(err);
+			req.flash("error", err.message);
 			res.redirect("/");
 		}else {
-			console.log("post deleted!");
+			req.flash("success", "Post deleted!")
 			res.redirect("/");
 		}
 	});
@@ -179,6 +194,7 @@ app.get("/show/:id/edit", isLoggedIn, function(req, res){
 	Post.findById(req.params.id, function(err, post){
 		if(err){
 			console.log(err)
+			req.flash("error", err.message);
 			res.redirect("/show/"+req.params.id);
 		}else {
 			res.render("edit", {post:post});
@@ -192,8 +208,10 @@ app.post("/show/:id/edit", isLoggedIn, function (req,res){
 	Post.findByIdAndUpdate(req.params.id, req.body.post, function(err, post){
 		if (err){
 			console.log(err);
+			req.flash("error", err.message);
 			res.redirect("/");
 		}else {
+			req.flash("success", "Post updated!")
 			res.redirect("/show/"+req.params.id);
 
 		}
@@ -226,6 +244,7 @@ app.get ("/search", function(req,res){
 app.get ("/show/:id", function(req, res){
 	Post.findById(req.params.id).populate("comments").exec(function(err, foundPost){
 		if (err){
+			req.flash("error", err.message);
 			res.redirect("/");
 		}else{
 			res.render("show", {post: foundPost});
@@ -241,6 +260,7 @@ app.get ("/show/:id", function(req, res){
 app.post ("/show/:id/comment", isLoggedIn, function(req, res){
 	Post.findById(req.params.id, function(err, post){
 		if (err){
+			req.flash("error", err.message);
 			console.log (err);
 			redirect("/show");
 		}else {
@@ -250,7 +270,7 @@ app.post ("/show/:id/comment", isLoggedIn, function(req, res){
 				text : (req.body.comment)
 			}, function(err, comment){
 				if(err){
-					console.log("error");
+					flash("error", "Something went wrong.");
 				}else {
 					post.comments.push(comment);
 					post.save();
@@ -267,11 +287,13 @@ app.post ("/show/:id/comment", isLoggedIn, function(req, res){
 app.get("/show/:post_id/comments/:comment_id/edit", OwnsCom, function(req, res){
 	Post.findById(req.params.post_id, function(err, post){
 		if(err){
+			req.flash("error", err.message);
 			console.log(err);
 			
 		}else{
 			Comment.findById(req.params.comment_id, function(err, foundCom){
 				if (err){
+					req.flash("error", err.message);
 					console.log(err)
 					res.redirect("/show/"+req.params.post_id);
 				}else {
@@ -287,10 +309,11 @@ app.get("/show/:post_id/comments/:comment_id/edit", OwnsCom, function(req, res){
 app.post("/show/:id/comments/:comment_id/edit", OwnsCom, function(req, res){
 	Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, com){
 		if(err){
+			req.flash("error", err.message);
 			console.log(err);
 			res.redirect("/show/"+req.params.id);
 		}else{
-			console.log(com);
+			req.flash("success", "Comment updated!")
 			res.redirect("/show/"+req.params.id);
 		}
 	});
@@ -302,9 +325,10 @@ app.post("/show/:id/comments/:comment_id/edit", OwnsCom, function(req, res){
 app.post("/show/:id/comments/:comment_id/delete", OwnsCom, function(req, res){
 	Comment.findByIdAndRemove(req.params.comment_id, function(err, com){
 		if (err){
+			req.flash("error", err.message);
 			console.log("comment not deleted!");
 		}else {
-			console.log("comment deleted!");
+			req.flash("success", "Comment deleted!")
 			res.redirect("/show/"+req.params.id);
 		}
 	});
