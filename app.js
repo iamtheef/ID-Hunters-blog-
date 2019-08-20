@@ -14,6 +14,7 @@ var Post = require ("./models/post");
 var Comment = require("./models/comment");
 var User = require("./models/user");
 var sessions = require("client-sessions");
+var locus = require ("locus");
 
 
 
@@ -34,8 +35,8 @@ app.use(flash());
 app.use(require("express-session")({
 	secret: "Prince of Denmark is dead.",
 	resave: true,
-	saveUninitialized: true,
-	cookie:{secured: true}
+	saveUninitialized: true
+	
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -102,12 +103,7 @@ app.post("/login", passport.authenticate("local", {
 }), function(req, res){	
 });
 
-function isLoggedIn (req,res,next){
-	if(req.isAuthenticated()){
-		return next();
-	}
-		res.redirect("/login");
-}
+
 
 
 app.post("/logout", function(req,res){
@@ -141,12 +137,15 @@ app.get ("/UC", isLoggedIn, function(req,res){
 
 // CREATE & DELETE ================================================================
 
-app.get ("/new", isLoggedIn, function (req, res){
-	res.render("new");
-
+app.get ("/:id/new", isLoggedIn, function (req, res){
+	User.findById(req.params.id, function(err, user){
+		if (err){
+			req.flash("There was an error, try to login again.");
+		}else {
+			res.render("new");
+		}
+	});
 });
-
-
 
 
 app.post("/new", isLoggedIn, function (req,res) {
@@ -221,7 +220,7 @@ app.post("/show/:id/edit", isLoggedIn, function (req,res){
 //SEARCH ============================================================================
 
 app.get ("/search", function(req,res){
-	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=<key_removed>&format=json&album="+req.query.term, function(error, response, body){
+	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=64ad4434cae54ab19bfd65d7ac246e09&format=json&album="+req.query.term, function(error, response, body){
 		if(!error && response.statusCode == 200){
 			var data = JSON.parse(body)
 			res.render ("search", {data: data});
@@ -243,6 +242,34 @@ app.get ("/show/:id", function(req, res){
 	});
 });	
 
+// User profile ================
+
+app.get("/:id/profile", function(req,res){
+	User.findById(req.params.id, function(err, user){
+		if(err){
+			req.flash("error", "User not found! Try login in.");
+			res.redirect("/login");
+		}else{
+			res.render("userProfile", {user:user});
+		}
+	});
+	
+});
+
+
+//User favs ======================
+
+app.get("/:id/favs", function(req,res){
+	User.findById(req.params.id, function(err, user){
+		if(err){
+			req.flash("error", "User not found! Try login in.");
+			res.redirect("/login");
+		}else{
+			res.render("favs", {user:user});
+		}
+	});
+	
+});
 
 
 //COMMENTS ===========================================================================
@@ -326,6 +353,16 @@ app.post("/show/:id/comments/:comment_id/delete", OwnsCom, function(req, res){
 });
 
 
+function isLoggedIn (req,res,next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+		req.flash("error", "Please login first!")
+		res.redirect("/login");
+}
+
+
+
 
 function OwnsCom (req,res,next) {
 	if(req.isAuthenticated()){
@@ -344,6 +381,7 @@ function OwnsCom (req,res,next) {
 		res.redirect("back");
 	}	
 }
+
 
 
 
