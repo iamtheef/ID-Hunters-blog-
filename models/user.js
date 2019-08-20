@@ -10,7 +10,9 @@ var userSchema = new mongoose.Schema ({
 	email : {type: String},
 	firstName : {type: String},
 	lastName : {type: String},
+	avatar: String,
 	isAdmin : {type: Boolean, default: false},
+	
 	posts : [
 		{
 			type : mongoose.Schema.Types.ObjectId,
@@ -18,6 +20,22 @@ var userSchema = new mongoose.Schema ({
 		}
 
 	]
+
+	// collection : [
+	// 	{
+	// 		type : mongoose.Schema.Types.ObjectId,
+	// 		ref: "Post"
+	// 	}
+
+	// ]
+
+	// favourites : [
+	// 	{
+	// 		type : mongoose.Schema.Types.ObjectId,
+	// 		ref: "Post"
+	// 	}
+
+	// ]
 });
 
 

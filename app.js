@@ -76,7 +76,14 @@ app.get("/register", function(req, res){
 });
 
 app.post("/register", function(req, res){
-	var newUser = new User({username: req.body.username});
+	var newUser = new User({
+		username: req.body.username,
+		email: req.body.email,
+		firstName: req.body.firstName,
+		lastName: req.body.lastName,
+		avatar: req.body.avatar
+
+		});
 	User.register(newUser, req.body.password, function(err, user){
 		if (err){
 			console.log(err);

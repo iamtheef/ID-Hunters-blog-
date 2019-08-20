@@ -70,13 +70,19 @@ p {
 	}
 }
 
-
-
-
 input[type=text] {
 	float:right;
 	box-sizing: border-box;
   width: 150px;
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  border-style: solid;
+}
+
+input[type=search] {
+	float:right;
+	box-sizing: border-box;
+  
   -webkit-transition: width 0.4s ease-in-out;
   transition: width 0.4s ease-in-out;
   border-style: solid;
@@ -141,7 +147,7 @@ input[type=password] {
 	margin-top: 10px;
 }
 
-input[type=text], input[type=password], textarea:focus{
+input[type=text], input[type=search], input[type=password], textarea:focus{
 	outline: none;
 }
 
@@ -153,7 +159,56 @@ input[type=text], input[type=password], textarea:focus{
 	display:inline-block ; 
 }
 
+.background{
+	background-image: url("https://images.unsplash.com/photo-1503683759663-762ec9716627?ixlib=rb-1.2.1&w=1000&q=80");
+	min-width:1000px !important; 
+	height: 360px; 
+	opacity: 0.2;
+	-webkit-background-size: cover;
+      
+}
+
+
+.button4{
+  border-radius: 12px;
+  border: none;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+
+
+.profINTRO{	
+	background: url("https://media1.giphy.com/media/OmcqoK1Zr5P0c/giphy.gif?cid=790b761184e1076bdcc7ecb588676b372dc8c9c048822dc4&rid=giphy.gif");
+	background-repeat: no-repeat;
+	padding: 200px;
+	-webkit-background-size: cover;
+}
+
+
+.profINTRO h3, h5 {
+	color: white !important;
+}
 
 
 
+div.scrollmenu {
+ background-color: rgba(94, 90, 90,0.3);
 
+  overflow: auto;
+  white-space: nowrap;
+}
+
+div.scrollmenu img {
+  display: inline-block;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+}
+
+div.scrollmenu a:hover {
+  color: white;
+}

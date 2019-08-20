@@ -1,21 +1,79 @@
 
 <%include header%>
+<div class="profINTRO">
+	<div class="container">
+		<h3 class="wlc">Hello <%=user.username%>! </h3>
+		<h5 class="wlc2">What are you gonna listen to today?</h5>
+	</div>
+</div>
 
-<h1>Hello <%=user.username%>! This page is under construction and wiil be available soon. </h1>
-
-
-<div class="row">
-		<img src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-44-512.png">
-		</div>
-		<a href="/" ><button 
-			class="btn btn-outline-dark mt-3">Go Back</button></a>
-
+<div class="background"></div>
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<div style="margin:auto; margin-right: 70px; margin-left:70px; ">
+<nav class="navbar navbar-light navbar-expand-lg bg-light" style="margin-top: -360px;">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <% if(user.avatar){%>
+  <button class="button button4" 
+  		style="background-image: url(<%=user.avatar%>); 
+  			-webkit-background-size: cover;"></button>
+  <%}%>
+
+  <div class="navbar collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item mr-2">
+        <a class="nav-link" href="#">Collection</a>
+      </li>
+      <li class="nav-item mr-2">
+        <a class="nav-link" href="#">Favourites</a>
+      </li>
+      <li class="nav-item mr-2">
+        <a class="nav-link" href="#">Wishlist</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link mr-2" href="#">Posts</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Cart
+        </a>
+    </ul>
+    <form class="form-inline">
+      <input class="float-right mr-sm-2" type="search" 
+      	placeholder="Dig up <%=user.username%>'s collection">
+      <button class="btn-outline-dark" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+</div>
+
+
+<h3 class="wlc2 mt-5 mb-1">Recently listened to</h3>
+
+<div class="scrollmenu mt-2" style="position: relative;">
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS649250-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://www.residentadvisor.net/images/news/2019/traumprinz_forgotten_world_ep.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS626134-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://img.discogs.com/Xz5-AdO4WBueYEM84FIWRCFFzTE=/472x312/smart/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/A-1993158-1513802902-1307.jpeg.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://img.discogs.com/st9o3bVIPfltcsvtr9HimYGDgBY=/fit-in/340x341/filters:strip_icc():format(jpeg):mode_rgb():quality(90)/discogs-images/R-8661616-1466125649-5808.bmp.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://i1.sndcdn.com/artworks-000087079421-f2dfqw-t500x500.jpg"></a>
+</div>
+
+
+<h3 class="wlc2" style="margin-top: 40px;">Wishlist</h3>
+
+<div class="scrollmenu mt-2" style="position: relative; margin-bottom: 100px;">
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS350266-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS479034-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS409757-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS369474-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS502489-01A-BIG.jpg"></a>
+  <a href="#"><img style="width: 300px; height: 300px;" src="https://soundshelter.nyc3.cdn.digitaloceanspaces.com/images/covers/CS471522-01A-BIG.jpg"></a>
+</div>
+
+
+<%include footer%>
