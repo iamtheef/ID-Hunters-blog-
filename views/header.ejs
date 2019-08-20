@@ -26,9 +26,9 @@
           <a class="btn btn-light dropdown-item" href="/login">Login</a>
           <a class="btn btn-light dropdown-item" href="/register">Register</a>
         <%} else {%>
-          <a class="btn btn-light dropdown-item" href="/new">New Post</a>
-          <a class="btn btn-light dropdown-item" href="/UC">My Profile</a>
-          <a class="btn btn-light dropdown-item" href="/UC">Favourites</a>
+          <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/new">New Post</a>
+          <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/profile">My Profile</a>
+          <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/favs">Favourites</a>
           <form action="/logout" method="POST">
           <button class="btn btn-light dropdown-item">Logout</button></form>
         <%}%>
