@@ -45,35 +45,23 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
-	next();
 	res.locals.error = req.flash("error");
 	res.locals.success = req.flash("success");
+	next();
 });
 
 
 //LOGIN & REGISTER ================================================================
 
 app.get("/login", function(req, res){
-	Post.find({}, function(err, allPosts){
-		if (err){
-			console.log (err);
-		}else {
-			res.render("login");
-		}
-	});
-	
+	res.render("login");
 });
 
-app.get("/register", function(req, res){
-	Post.find({}, function(err, allPosts){
-		if (err){
-			console.log (err);
-		}else {
-			res.render("register");
-		}
-	});
-	
+
+app.get("/register", (req, res) => {
+	res.render("register");
 });
+	
 
 app.post("/register", function(req, res){
 	var newUser = new User({
@@ -82,8 +70,8 @@ app.post("/register", function(req, res){
 		firstName: req.body.firstName,
 		lastName: req.body.lastName,
 		avatar: req.body.avatar
+		})
 
-		});
 	User.register(newUser, req.body.password, function(err, user){
 		if (err){
 			console.log(err);
@@ -109,8 +97,6 @@ app.post("/login", passport.authenticate("local", {
 	failureFlash: "Something went wrong, try again."
 }), function(req, res){	
 });
-
-
 
 
 app.post("/logout", function(req,res){
@@ -246,7 +232,7 @@ app.get ("/show/:id", function(req, res){
 
 // User profile ================
 
-app.get("/:id/profile", function(req,res){
+app.get("/:id/profile", isLoggedIn, function(req,res){
 	User.findById(req.params.id, function(err, user){
 		if(err){
 			req.flash("error", "User not found! Try login in.");
@@ -258,6 +244,47 @@ app.get("/:id/profile", function(req,res){
 	
 });
 
+//avatar updating ================================
+
+app.post("/:id/updateAvatar", function(req,res){
+	if(req.body.avatar.length>0){
+		User.findById(req.params.id, function(err, user){
+			if(err){
+				console.log(err);
+				req.flash("error", "There was an error.");
+			}
+			else {
+				if (user.avatar !== req.body.avatar){
+				user.avatar = req.body.avatar;
+				user.save();
+				}
+			}
+		});
+	}
+	req.flash("success", "Avatar updated!");
+		res.redirect("/"+req.params.id+"/profile");
+});
+
+//password updating =================================
+
+app.post("/:id/updatePass", (req,res)=>{
+	if(req.body.password.length>0){
+		User.findById({_id: req.params.id}).then((santizedUser)=>{
+			if(santizedUser){
+				santizedUser.setPassword(req.body.password, ()=>{
+					santizedUser.save();
+					req.flash("success", "Password Updated!");
+       				res.redirect("/"+req.params.id+"/profile");
+				});
+			}else{
+				req.flash("error", "An error was appeared. Try again.");
+       			res.redirect("/"+req.params.id+"/profile");
+			}
+		},(err)=>{
+			console.log(err)
+		}); 
+    }
+});
 
 //User favs ======================
 

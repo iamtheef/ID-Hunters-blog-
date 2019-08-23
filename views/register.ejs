@@ -1,16 +1,18 @@
 <%include header%>
 
-<script> 
-    function checkPassword(form) { 
-        password1 = form.password.value; 
-        password2 = form.confPass.value; 
+<script type="text/javascript">
+  function checkPassword(form) {
+    var password = $("#password").val();
+    var confirmPassword = $("#passwordconfirm").val();
 
- 		 if (password1 != password2) { 
-            alert ("\nPassword did not match: Please try again...") 
-            return false; 
-        } 
-    } 
-</script> 
+    if (password != confirmPassword){
+       alert("Passwords don't match.");
+    	return false;
+    }else{
+		return true;
+	}
+} 
+</script>
 
 
 <h1 style="font-size: 46px;
@@ -20,7 +22,7 @@
 		<p class="row justify-content-center mb-5" style="margin-left:-170px;" 
 				>*All the fields with asterisk are required</p>
 
-<form method="post" action="register">
+<form method="post" action="/register" onSubmit = "return checkPassword(this)">
 
 	<div class="container">
 		<div class="row d-flex justify-content-center">
@@ -38,11 +40,11 @@
 		</div>
 		<div class="row mt-3 justify-content-center">
 			<input type="password" name="password" placeholder="*Password" style="min-width: 431px;"
-			class="pl-1" required>
+			class="pl-1" required id="password">
 		</div>
 		<div class="row mt-3 justify-content-center">
-			<input type="password" name="confPass" placeholder="*Confirm Password" 
-			style="min-width: 431px;" class="pl-1" required>
+			<input type="password" name="confirmPassword" placeholder="*Confirm Password" 
+			style="min-width: 431px;" class="pl-1" required id="passwordconfirm">
 		</div>
 		<div class="row mt-3 justify-content-center">
 			<input type="text" name="email" placeholder="*email" style="min-width: 431px;"

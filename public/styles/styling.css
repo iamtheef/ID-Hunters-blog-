@@ -181,10 +181,16 @@ input[type=text], input[type=search], input[type=password], textarea:focus{
 }
 
 
+@media only screen and (max-width : 650px){
+	.profINTRO{
+		padding: 100px !important;
+	}
+}
+
 .profINTRO{	
 	background: url("https://media1.giphy.com/media/OmcqoK1Zr5P0c/giphy.gif?cid=790b761184e1076bdcc7ecb588676b372dc8c9c048822dc4&rid=giphy.gif");
 	background-repeat: no-repeat;
-	padding: 200px;
+	padding:200px;
 	-webkit-background-size: cover;
 }
 
@@ -212,3 +218,45 @@ div.scrollmenu img {
 div.scrollmenu a:hover {
   color: white;
 }
+
+
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto; /* 15% from the top and centered */
+  padding: 0;
+  border: 1px solid #888;
+  width: 90%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
