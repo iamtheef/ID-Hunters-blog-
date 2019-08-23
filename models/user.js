@@ -1,7 +1,7 @@
 var mongoose = require ("mongoose");
 mongoose.connect('mongodb://localhost/blogApp_DB', {useNewUrlParser: true });
 var passportLocalMongoose = require("passport-local-mongoose");
-
+var Post = require("../models/post")
 
 
 var userSchema = new mongoose.Schema ({
@@ -10,7 +10,7 @@ var userSchema = new mongoose.Schema ({
 	email : {type: String},
 	firstName : {type: String},
 	lastName : {type: String},
-	avatar: String,
+	avatar: {type: String, default: null},
 	isAdmin : {type: Boolean, default: false},
 	
 	posts : [

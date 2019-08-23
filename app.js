@@ -137,28 +137,49 @@ app.get ("/:id/new", isLoggedIn, function (req, res){
 
 
 app.post("/new", isLoggedIn, function (req,res) {
-	var newPost = {
+	var newPost = ({
 		username: req.user.username,
 		authorID: req.user._id,
 		artist: req.body.artist,
 		title: req.body.title,
 		image: req.body.image,
 		content: req.body.content
-	}
+	});
 
-	Post.create (newPost, function(err, post){
+	User.findById(req.user._id, (err, user)=>{
 		if (err){
 			console.log (err);
 			req.flash("error", err.message);
 			res.render("new");
-		}else{
-			req.flash("success", "Post successfuly created!")
-			res.redirect("/");
-		}
-	});
+		}else {
 
+				Post.create (newPost, function(err, post){
+			if (err){
+				console.log (err);
+				req.flash("error", err.message);
+				res.render("new");
+			}else{
+				user.posts.push(post)
+				user.save();
+				req.flash("success", "Post successfuly created!")
+				res.redirect("/");
+			}});
+
+		}
+				
+	});
 });
 
+
+// app.post("/new", isLoggedIn, function (req,res) {
+// 	var newPost = {
+// 		username: req.user.username,
+// 		authorID: req.user._id,
+// 		artist: req.body.artist,
+// 		title: req.body.title,
+// 		image: req.body.image,
+// 		content: req.body.content
+// 	}
 
 app.post ("/show/:id", isLoggedIn, function(req, res){
 	Post.findByIdAndRemove(req.params.id, function(err){
@@ -247,22 +268,22 @@ app.get("/:id/profile", isLoggedIn, function(req,res){
 //avatar updating ================================
 
 app.post("/:id/updateAvatar", function(req,res){
-	if(req.body.avatar.length>0){
-		User.findById(req.params.id, function(err, user){
-			if(err){
-				console.log(err);
-				req.flash("error", "There was an error.");
-			}
-			else {
-				if (user.avatar !== req.body.avatar){
+	User.findById(req.params.id, function(err, user){
+		if(err){
+			console.log(err);
+			req.flash("error", "There was an error.");
+		}
+		else {
+			if (user.avatar !== req.body.avatar && req.body.avatar !== ""){
 				user.avatar = req.body.avatar;
-				user.save();
-				}
+			}else{
+				user.avatar = null;
 			}
-		});
-	}
-	req.flash("success", "Avatar updated!");
-		res.redirect("/"+req.params.id+"/profile");
+			req.flash("success", "Avatar updated!");
+			res.redirect("/"+req.params.id+"/profile");
+		}
+		user.save();
+	});
 });
 
 //password updating =================================
@@ -284,7 +305,7 @@ app.post("/:id/updatePass", (req,res)=>{
 			console.log(err)
 		}); 
     }
-});
+}); 
 
 //User favs ======================
 
@@ -298,6 +319,21 @@ app.get("/:id/favs", function(req,res){
 		}
 	});
 	
+});
+
+
+
+// user posts ========================
+
+app.get ("/:id/posts", isLoggedIn, (req, res)=>{
+	User.findById(req.params.id).populate("posts").exec((err, user)=>{
+		if (err){
+			console.log(err);
+			res.redirect("/"+req.params.id+"/profile");
+		}else{
+			res.render("userPosts", {user: user});
+		}
+	});
 });
 
 

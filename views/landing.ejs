@@ -1,10 +1,28 @@
 <% include header  %>
+<script type="text/javascript">
+  $(document).ready(function(){                
+        $(window).bind('scroll',fetchMore);
+   });
+
+   fetchMore = function (){
+       if ( $(window).scrollTop() >= $(document).height()-$(window).height()-300 ){
+           $(window).unbind('scroll',fetchMore);
+            $.post('ajax/ajax_manager.php',{'action':'moreReviews','start':$('.review').length,'step':5 },
+            function(data) {
+               if(data.length>10){
+                    $(data).insertBefore($('#moreHolder'));
+                    $(window).bind('scroll',fetchMore);
+               }
+            });
+        }
+   }
+</script>
 
 
 <h1 class="text-center wlc">WELCOME TO THE VINYL DATABASE</h1>
 
 
-<div class="container carouselle mb-5">
+<div class="container carouselle" style="margin-bottom: -70px;">
 	<div class="row-10">
 		<div class="col-">
 			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -42,9 +60,9 @@
 	</div>
 </div>
 
-<hr class="q">
+<hr class="">
 
-<h1 class="text-center wlc2">OUR CAREFULLY PICKED SELECTIONS :)</h1>
+<h1 class="text-center wlc2 mt-4 mb-5">OUR FULL CATALOG :)</h1>
 
 
 <div class="container">

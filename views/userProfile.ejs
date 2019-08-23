@@ -90,14 +90,14 @@
 
 
 <div class="ml-2">
-  <% if(user.avatar !== ''){%>
+  <% if (user.avatar == null) {%>
     <button class="button button4" 
-    		style="background-image: url(<%=user.avatar%>); 
+    		style="background-image: url(https://cdn2.iconfinder.com/data/icons/user-icon-2-1/100/user_5-15-512.png); 
     			-webkit-background-size: cover;"></button>
   <%} else {%>
 
    <button class="button button4" 
-        style="background-image: url('https://image.flaticon.com/icons/svg/17/17004.svg')
+        style="background-image: url(<%= user.avatar %>);
           -webkit-background-size: cover;"></button>
   <%}%>
 </div>
@@ -116,7 +116,7 @@
         <a class="nav-link" href="#">Wishlist</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link mr-2" href="#">Posts</a>
+        <a class="nav-link mr-2" href="/<%=user._id%>/posts">Posts</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
