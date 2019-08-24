@@ -1,84 +1,45 @@
 <% include header  %>
-<script type="text/javascript">
-  $(document).ready(function(){                
-        $(window).bind('scroll',fetchMore);
-   });
-
-   fetchMore = function (){
-       if ( $(window).scrollTop() >= $(document).height()-$(window).height()-300 ){
-           $(window).unbind('scroll',fetchMore);
-            $.post('ajax/ajax_manager.php',{'action':'moreReviews','start':$('.review').length,'step':5 },
-            function(data) {
-               if(data.length>10){
-                    $(data).insertBefore($('#moreHolder'));
-                    $(window).bind('scroll',fetchMore);
-               }
-            });
-        }
-   }
-</script>
 
 
-<h1 class="text-center wlc">WELCOME TO THE VINYL DATABASE</h1>
+<h1 class="text-center wlc">WELCOME TO THE BIGGEST ID HUNTING</h1>
+<h4 class="text-center wlc2">Right where Shazam fails</h4>
 
 
-<div class="container carouselle" style="margin-bottom: -70px;">
-	<div class="row-10">
-		<div class="col-">
-			<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-			  <ol class="carousel-indicators">
-			    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-			    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-			    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-			  </ol>
-			  <div class="carousel-inner">
-			    <div class="carousel-item active">
-			    	<a href="/show/<%= posts[5]._id%>">
-			      <img class="d-block w-100" src="<%= posts[5].image%>" alt="<%=posts[5].title%>">
-			      </a>
-			    </div>
-			    <div class="carousel-item">
-			    	<a href="/show/<%= posts[8]._id%>">
-			      <img class="d-block w-100" src="<%= posts[8].image%>" alt="<%=posts[8].title %>">
-			  		</a>
-			    </div>
-			    <div class="carousel-item">
-			    	<a href="/show/<%= posts[9]._id%>">
-			      <img class="d-block w-100" src="<%=posts[9].image%>" alt="<%= posts[9].title%>"></a>
-			    </div>
-			  </div>
-			  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			    <span class="sr-only">Previous</span>
-			  </a>
-			  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-			    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-			    <span class="sr-only">Next</span>
-			  </a>
-			</div>
+<div class="searchBox" style="margin-bottom: 50px; height: 300px; min-width: 100%">
+	<div class="container">
+		<div class="flex-row">
+			<div class="col-12" style="padding-top: 100px;">
+				<a href="/login">
+			<button style="background-color: #fff; opacity: 0.7" 
+					type="button" class="pt-4 btn btn-lg btn-light btn-block">
+					Ask the hunters now!</button></a>
+					</div>
 		</div>
 	</div>
 </div>
 
+
 <hr class="">
 
-<h1 class="text-center wlc2 mt-4 mb-5">OUR FULL CATALOG :)</h1>
+<h1 class="text-center wlc2 mt-4 mb-5">LATEST POSTS FROM OUR USERS :)</h1>
 
 
 <div class="container">
 	<div class="row-6">
-		<% posts.forEach(function(post){ %>		
+		<% for (var i=posts.length-1; i>10; i--){ %>		
 			<div class="section">
-				<img class="img-thumbnail" src="<%= post.image %>" >
-					<a href="/show/<%= post._id %>"><h2> 
-						<%= post.artist %> <strong> - </strong> 
-						<%= post.title %></h2></a>
-				<p class="col-12 px-0 content2"> <%= post.content %></p>
+				<img class="img-thumbnail" src="<%= posts[i].image %>" >
+					<a href="/show/<%= posts[i]._id %>"><h2> 
+						<%= posts[i].artist %> <strong> - </strong> 
+						<%= posts[i].title %></h2></a>
+				<p class="col-12 px-0 content2"> <%= posts[i].content %></p>
 				<hr>
 			</div>
-		<% }); %>
+		<% }; %>
+		<a href="/viewAll"><button class="btn btn-sm btn-outline-dark mb-3">View more</button></a>
 	</div>
 </div>
+
 
 
 <% include footer %>

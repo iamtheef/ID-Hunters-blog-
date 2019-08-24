@@ -1,0 +1,21 @@
+<%include header%>
+
+
+
+<div class="container mt-4">
+	<div class="row">
+		<% posts.forEach(function(post){ %>		
+			<div class="section">
+				<img class="img-thumbnail" src="<%= post.image %>" >
+					<a href="/show/<%= post._id %>"><h2> 
+						<%= post.artist %> <strong> - </strong> 
+						<%= post.title %></h2></a>
+				<p class="col-12 px-0 content2"> <%= post.content %></p>
+				<hr>
+			</div>
+		<% }); %>
+	</div>
+</div>
+
+
+<%include footer%>

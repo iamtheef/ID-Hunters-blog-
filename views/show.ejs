@@ -4,7 +4,7 @@
 <div class="container">
 	<div class="row align-items">
 		<div class="col-md-6 order-1 mb-3 order-lg-1">
-			<img src="<%= post.image%>" class="img-fluid">
+			<img src="<%= post.image%>"></img>
 		</div>
 		<div class="col-md-6 order-1 order-lg-2 pl-4">
 			<h1 class="text-center"><span class="artist"><%= post.artist%></span> - <%= post.title%></h1> 
@@ -21,7 +21,7 @@
 				<p class="author"><strong><%=com.user%></strong></p>
 				<p class="comment"style="margin-bottom: 0px;"><%= com.text %></p>
 				
-	<% if(currentUser && com.userID == (currentUser._id) || currentUser && currentUser.isAdmin){ %>
+		<% if(currentUser && com.userID == (currentUser._id) || currentUser && currentUser.isAdmin){ %>
 
 					<a href="/show/<%=post._id%>/comments/<%=com._id%>/edit">
 						<img src="https://cdn2.iconfinder.com/data/icons/education-2-45/48/71-512.png" style="height: 12px; width: 12px; margin-left:10px; position: relative;">

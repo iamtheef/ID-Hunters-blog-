@@ -117,7 +117,6 @@ app.get("/", function(req, res){
 			res.render("landing", {posts: allPosts});
 		}
 	});
-	
 });
 
 
@@ -171,16 +170,6 @@ app.post("/new", isLoggedIn, function (req,res) {
 });
 
 
-// app.post("/new", isLoggedIn, function (req,res) {
-// 	var newPost = {
-// 		username: req.user.username,
-// 		authorID: req.user._id,
-// 		artist: req.body.artist,
-// 		title: req.body.title,
-// 		image: req.body.image,
-// 		content: req.body.content
-// 	}
-
 app.post ("/show/:id", isLoggedIn, function(req, res){
 	Post.findByIdAndRemove(req.params.id, function(err){
 		if (err){
@@ -229,7 +218,7 @@ app.post("/show/:id/edit", isLoggedIn, function (req,res){
 //SEARCH ============================================================================
 
 app.get ("/search", function(req,res){
-	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=<removed>&format=json&album="+req.query.term, function(error, response, body){
+	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=<keyremoved>&format=json&album="+req.query.term, function(error, response, body){
 		if(!error && response.statusCode == 200){
 			var data = JSON.parse(body)
 			res.render ("search", {data: data});
@@ -250,6 +239,16 @@ app.get ("/show/:id", function(req, res){
 		}
 	});
 });	
+
+app.get ("/viewAll", (req,res) =>{
+	Post.find({}, (err, allPosts)=>{
+		if(err){
+			req.flash("error", "There was an error");
+		}else{
+			res.render ("viewAll", {posts: allPosts});
+		}
+	})
+})
 
 // User profile ================
 

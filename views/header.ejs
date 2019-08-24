@@ -10,12 +10,12 @@
 
 	
 
-	<title>The Vinyl DB</title>
+	<title>ID Hunters</title>
 </head>
 <body>
 
 <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
-  <a class="navbar-brand" href="/">The Vinyl DB</a>
+  <a class="navbar-brand" href="/">ID Hunters</a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
@@ -28,7 +28,7 @@
         <%} else {%>
           <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/new">New Post</a>
           <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/profile">My Profile</a>
-          <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/favs">Favourites</a>
+          <a class="btn btn-light dropdown-item" href="/<%=currentUser._id%>/favs">Messages</a>
           <form action="/logout" method="POST">
           <button class="btn btn-light dropdown-item">Logout</button></form>
         <%}%>

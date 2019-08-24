@@ -270,3 +270,11 @@ div.scrollmenu a:hover {
 	margin-left: 10px;	
 }
 
+.searchBox {
+	background-image: url("https://media.giphy.com/media/137B7zfSbkJTDW/giphy.gif");	
+	background-size: cover;
+	padding-top: 20px;
+	background-position: center;
+
+}
+
