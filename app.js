@@ -136,12 +136,23 @@ app.get ("/:id/new", isLoggedIn, function (req, res){
 
 
 app.post("/new", isLoggedIn, function (req,res) {
+	var isUtube = req.body.link.includes("watch?v=");
+	if(isUtube){
+		var link = req.body.link.replace("watch?v=", "embed/");
+	}else{
+		var link = req.body.link;
+	}
+
+	console.log(link);
+	console.log("https://www.youtube.com/embed/nAN_XYYhsNY");
+	console.log(req.body.link);
+
 	var newPost = ({
 		username: req.user.username,
 		authorID: req.user._id,
 		artist: req.body.artist,
 		title: req.body.title,
-		image: req.body.image,
+		link: link,
 		content: req.body.content
 	});
 

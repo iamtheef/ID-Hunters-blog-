@@ -9,11 +9,18 @@
 	<div class="container">
 		<div class="flex-row">
 			<div class="col-12" style="padding-top: 100px;">
+				<% if (!currentUser){ %>
 				<a href="/login">
 			<button style="background-color: #fff; opacity: 0.7" 
 					type="button" class="pt-4 btn btn-lg btn-light btn-block">
 					Ask the hunters now!</button></a>
-					</div>
+					<%}else{%>
+					<a href="/<%=currentUser.id%>/new">
+			<button style="background-color: #fff; opacity: 0.7" 
+					type="button" class="pt-4 btn btn-lg btn-light btn-block">
+					Ask the hunters now!</button></a>
+					<%}%>
+			</div>
 		</div>
 	</div>
 </div>

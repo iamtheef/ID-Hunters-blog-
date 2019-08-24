@@ -7,7 +7,7 @@ var postSchema = new mongoose.Schema ({
 	authorID: String,
 	artist : String,
 	title : String,
-	image : String,
+	link : String,
 	content : String,
 	comments : [
 		{

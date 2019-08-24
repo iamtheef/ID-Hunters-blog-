@@ -1,10 +1,15 @@
 <%include header%>
 
 
+
 <div class="container">
 	<div class="row align-items">
 		<div class="col-md-6 order-1 mb-3 order-lg-1">
-			<img src="<%= post.image%>"></img>
+			<%if (post.link.includes("watch?v")){%>
+			<iframe width="560" height="315" src="<%=post.link%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
+			<%}else{%>
+					<%= post.link %>
+			<%}%>
 		</div>
 		<div class="col-md-6 order-1 order-lg-2 pl-4">
 			<h1 class="text-center"><span class="artist"><%= post.artist%></span> - <%= post.title%></h1> 
@@ -71,7 +76,13 @@
 
 
 
-
+<script type="text/javascript">
+	$(document).ready( function () {
+ 	function isUT(link){
+	var isYoutube = link.includes("watch?v=");
+	
+}});
+</script>
 <hr style="margin-bottom: 50px;">
 
 <%include footer%>
