@@ -19,6 +19,7 @@ var locus = require ("locus");
 
 
 
+
 //APP CONFIG ====================================================================
 
 mongoose.connect('mongodb://localhost/blogApp_DB', {useNewUrlParser: true });
@@ -38,6 +39,7 @@ app.use(require("express-session")({
 	saveUninitialized: true
 	
 }));
+app.locals.moment = require('moment');
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -143,9 +145,6 @@ app.post("/new", isLoggedIn, function (req,res) {
 		var link = req.body.link;
 	}
 
-	console.log(link);
-	console.log("https://www.youtube.com/embed/nAN_XYYhsNY");
-	console.log(req.body.link);
 
 	var newPost = ({
 		username: req.user.username,
@@ -155,6 +154,8 @@ app.post("/new", isLoggedIn, function (req,res) {
 		link: link,
 		content: req.body.content
 	});
+
+	console.log(link);
 
 	User.findById(req.user._id, (err, user)=>{
 		if (err){

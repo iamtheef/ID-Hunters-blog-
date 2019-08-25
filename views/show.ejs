@@ -5,14 +5,21 @@
 <div class="container">
 	<div class="row align-items">
 		<div class="col-md-6 order-1 mb-3 order-lg-1">
-			<%if (post.link.includes("watch?v")){%>
+			<%if (post.link.includes("youtube")){%>
 			<iframe width="560" height="315" src="<%=post.link%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
-			<%}else{%>
-					<%= post.link %>
-			<%}%>
+			<%}else if(post.link.includes("soundcloud")){%>
+					<iframe width="560" height="500" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<%= post.link%>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
+			<%}else if (post.link.includes("facebook")){ %>
+				<iframe src="https://www.facebook.com/plugins/video.php?href=<%= post.link%>&show_text=0&width=560" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+			<% }else {%>
+				<iframe src="<%=post.link%>" width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"	></iframe>
+				<%}%>
 		</div>
 		<div class="col-md-6 order-1 order-lg-2 pl-4">
-			<h1 class="text-center"><span class="artist"><%= post.artist%></span> - <%= post.title%></h1> 
+			<h1 class="text-center"><span class="artist"><%= post.artist%></span> - <%= post.title%></h1>
+			<em>
+				<p class="ml-5">Submitted by: <%=post.username%>, <%= moment(post.createdAt).fromNow()%></p>
+			</em> 
 			<p class="content order-lg-3"> <%= post.content%></p>
 			<button class="btn btn btn-outline-dark mt-5" style="width: 70%; 
 					margin-left: 60px;">More info</button>
@@ -23,7 +30,8 @@
 		
 		<% post.comments.forEach(function(com){ %>
 			<div class="comDiv mb-3" style="margin-left: -5px;">
-				<p class="author"><strong><%=com.user%></strong></p>
+				<p class="author"><strong><%=com.user%></strong>
+					<span class="wlc ml-1" style="font-size: 14px;"><%= moment(com.createdAt).fromNow()%></span></p>
 				<p class="comment"style="margin-bottom: 0px;"><%= com.text %></p>
 				
 		<% if(currentUser && com.userID == (currentUser._id) || currentUser && currentUser.isAdmin){ %>
@@ -74,15 +82,6 @@
 		</div>
 </div>
 
-
-
-<script type="text/javascript">
-	$(document).ready( function () {
- 	function isUT(link){
-	var isYoutube = link.includes("watch?v=");
-	
-}});
-</script>
 <hr style="margin-bottom: 50px;">
 
 <%include footer%>

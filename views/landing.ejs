@@ -35,18 +35,19 @@
 	<div class="row-6">
 		<% for (var i=posts.length-1; i>10; i--){ %>		
 			<div class="section">
-				<img class="img-thumbnail" src="<%= posts[i].image %>" >
+				<video controls class="img-thumbnail" width="50%">
+					<source src ="<%= posts[i].link %>" ></source>	
+				</video>
 					<a href="/show/<%= posts[i]._id %>"><h2> 
 						<%= posts[i].artist %> <strong> - </strong> 
 						<%= posts[i].title %></h2></a>
 				<p class="col-12 px-0 content2"> <%= posts[i].content %></p>
+				<p>Submitted by <%= posts[i].username%> - <%= moment(posts[i].createdAt).fromNow()%></p>
 				<hr>
 			</div>
 		<% }; %>
 		<a href="/viewAll"><button class="btn btn-sm btn-outline-dark mb-3">View more</button></a>
 	</div>
 </div>
-
-
 
 <% include footer %>
