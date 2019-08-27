@@ -116,6 +116,7 @@ app.get("/", function(req, res){
 			req.flash("error", err.message);
 			console.log (err);
 		} else {
+				console.log(allPosts.length);
 			res.render("landing", {posts: allPosts});
 		}
 	});
