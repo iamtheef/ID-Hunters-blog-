@@ -254,15 +254,6 @@ app.get ("/show/:id", function(req, res){
 	});
 });	
 
-app.get ("/viewAll", (req,res) =>{
-	Post.find({}, (err, allPosts)=>{
-		if(err){
-			req.flash("error", "There was an error");
-		}else{
-			res.render ("viewAll", {posts: allPosts});
-		}
-	})
-})
 
 // User profile ================
 
@@ -322,18 +313,60 @@ app.post("/:id/updatePass", (req,res)=>{
 
 //User favs ======================
 
-app.get("/:id/favs", function(req,res){
-	User.findById(req.params.id, function(err, user){
-		if(err){
-			req.flash("error", "User not found! Try login in.");
-			res.redirect("/login");
+app.get ("/:id/favs", isLoggedIn, (req, res)=>{
+	User.findById(req.params.id).populate("favourites").exec((err, user)=>{
+		if (err){
+			console.log(err);
+			res.redirect("/"+req.params.id+"/profile");
 		}else{
-			res.render("favs", {user:user});
+			res.render("favs", {user: user});
 		}
 	});
-	
 });
 
+
+//add favourite ===========
+
+app.post("/:id/favs/:post/", isLoggedIn, (req, res)=>{
+	User.findById(req.params.id, (err, user)=>{
+		if (err){
+			req.flash("error", "There was an error.");
+			res.redirect("/show/"+req.params.post);
+		}else{
+			Post.findById(req.params.post, (err, post)=>{
+				if (err){
+					req.flash("error", "There was an error.");
+					res.redirect("/show/"+req.params.post);
+				}else{
+					user.favourites.push(post);
+					user.save();
+					req.flash("success", "Added to your favourites!");
+					res.redirect("/show/"+req.params.post);
+				}
+			});
+		}
+	});
+});
+
+//remove favourite =========
+app.post("/favs/:post/remove", isLoggedIn, (req,res)=>{
+	User.findById(req.user._id, (err, user)=>{
+		if(err){
+			req.flash("error, There was an error");
+			res.redirect("/"+req.user._id+"/favs");
+		}else {
+			User.updateOne({_id:req.user._id},{$pull:{favourites: req.params.post}},{multi:false},  (err)=>{
+			if (err){
+				req.flash("error, There was an error");
+			res.redirect("/"+req.user._id+"/favs");
+			}else {
+				req.flash("Post removed from your favourites!");
+				res.redirect("/"+req.user._id+"/favs")
+			}
+			});
+		}
+	});
+});
 
 
 // user posts ========================
@@ -462,8 +495,12 @@ function OwnsCom (req,res,next) {
 
 
 
-
 //PORT ==============================================================================
+
+
+app.get ("*", (req, res)=>{
+	res.render("UC");
+});
 
 app.listen (3000, function(){
 	console.log ("Server is up!");

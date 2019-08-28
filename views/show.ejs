@@ -25,14 +25,35 @@
 			<p class="content order-lg-3"> <%= post.content%></p>
 		</div>
 	</div>
-	
+
+<% if(currentUser){ %>
+	<div class="row ml-1">
+			<form action="/<%=currentUser._id%>/wishlist" method="post" style="margin-right: 5px;">
+				<button class="btn btn-sm btn-outline-grey" style="border:1px solid">
+					<img src="https://image.flaticon.com/icons/png/512/23/23912.png" width="20"></button>
+			</form>
+
+
+			<form action="/<%=currentUser._id%>/favs/<%=post._id %>/" method="post">
+			<button type="sumbit" class="btn btn-sm btn-outline-grey" 
+							style="padding: 0; width:38px; height: 32px; border:1px solid">
+				<img src="https://cdn2.iconfinder.com/data/icons/media-player-ui/512/Media-Icon-25-512.png" 
+						id = heart class="fa fa-heart-o"aria-hidden="true" width="30">
+				</button>
+			</form>
+		
+	</div>
+<%}%>
+
+
 	<hr>
 
 		
 		<% post.comments.forEach(function(com){ %>
 			<div class="comDiv mb-3" style="margin-left: -5px;">
 				<p class="author"><strong><%=com.user%></strong>
-					<span class="wlc ml-1" style="font-size: 14px;"><%= moment(com.createdAt).fromNow()%></span></p>
+					<span class="wlc ml-1" style="font-size: 14px;"><%= moment(com.createdAt).fromNow()%>
+					</span></p>
 				<p class="comment"style="margin-bottom: 0px;"><%= com.text %></p>
 				
 		<% if(currentUser && com.userID == (currentUser._id) || currentUser && currentUser.isAdmin){ %>
@@ -84,5 +105,19 @@
 </div>
 
 <hr style="margin-bottom: 50px;">
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#heart").click(function(){
+    if($("#heart").hasClass("liked")){
+      $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
+      $("#heart").removeClass("liked");
+    }else{
+      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
+      $("#heart").addClass("liked");
+    }
+  });
+});
+</script>
 
 <%include footer%>

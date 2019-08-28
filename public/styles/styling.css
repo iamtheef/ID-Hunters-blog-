@@ -281,3 +281,16 @@ div.scrollmenu a:hover {
 .post {
 	display: none;
 }
+#act{
+	background-color: red;
+}
+
+.fa-heart-o {
+  color: black;
+  cursor: pointer;
+}
+
+.fa-heart {
+  color: red;
+  cursor: pointer;
+}

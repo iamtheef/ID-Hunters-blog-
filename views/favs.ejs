@@ -1,18 +1,66 @@
 <%include header%>
-
-
-
-<h1>Hello <%=user.username%>! This page is under construction and wiil be available soon. </h1>
-
-
-<div class="row">
-		<img src="https://cdn3.iconfinder.com/data/icons/smileys-people-smiley-essential/48/v-44-512.png">
+	<div class="container mt-4">
+			<% if (user.favourites && user.favourites.length>0){ %>
+				<div class="row-6">
+					<% user.favourites.forEach((post)=>{ %>
+			<div class="section">
+				<a href="/show/<%= post._id %>"><h2> 
+						<%= post.artist %> <strong> - </strong> 
+						<%= post.title %></h2></a>
+				<p>Submitted by <%= post.username%> - <%= moment(post.createdAt).fromNow()%></p> 
+				<form action="/favs/<%=post._id%>/remove" method="post">
+					<button class="btn btn-sm btn-outline-dark" style="margin-bottom: 10px;">
+							<img src="https://cdn2.iconfinder.com/data/icons/filled-icons/493/x-512.png" 
+							width="15">
+					</button>
+					</form>
+				<div class="col-6">
+			<%if (post.link.includes("youtube")){%>
+			<iframe width="210%" height="200" src="<%=post.link%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
+			<%}else if(post.link.includes("soundcloud")){%>
+					<iframe width="210%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<%= post.link%>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+					</iframe>
+			<%}else if (post.link.includes("facebook")){ %>
+				<iframe src="https://www.facebook.com/plugins/video.php?href=<%= post.link%>&show_text=0&width=560" width="210%" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+			<% }else {%>
+    				<iframe src="<%= post.link%>"width="210%" height="200"></iframe> 
+    				<p>This seems not to be working properly. Click bellow to see the page.</p>
+    				<button class="btn btn-outline-dark"><a href="<%= post.link%>">Click here to go to the page</a>
+    				</button>
+			<%}%>
+			<div style="margin-bottom: 100px;"></div>
 		</div>
-		<a href="/" ><button 
-			class="btn btn-outline-dark mt-3">Go Back</button></a>
+
+			<%});%>
+				
+				<div style="margin-top: -10px; margin-left: 20px; margin-bottom: 5px;"><a onclick="history.back()">
+						<button class="btn btn-outline-dark"> Go Back</button></a>
+					</div>				
+			
+		</div>
+
+
+				<% }else{ %>			
+		</div>
+	</div>
+				<h1 class="noPosts" style="margin-top: -30px;">Wow, you have no favourites yet!</h1>
+				<div class="row pl-2">
+					<div style="margin-top: -10px; margin-left: 20px; margin-bottom: 5px;"><a onclick="history.back()">
+						<button class="btn btn-outline-dark"> Go Back</button></a>
+					</div>
+				</div>
+				<img style="width:100%; max-height: 580px; opacity: 0.7;" src="https://media1.giphy.com/media/26BRxLmNGpvn4MCGs/giphy.gif?cid=790b76111cfa31a5b43b0d404d7f38a85b365b9a45019d08&rid=giphy.gif">
+			<%}%>
 
 
 
+	
+
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+  crossorigin="anonymous"></script>
+  
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
