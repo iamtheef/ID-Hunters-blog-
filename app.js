@@ -1,6 +1,7 @@
 
 //REQUIREMENTS ==================================================================
 var path = require("path");	
+var amd = require("amd-loader");
 var express = require ("express");
 var ejs = require("ejs");
 var request = require("request");
@@ -39,6 +40,7 @@ app.use(require("express-session")({
 	saveUninitialized: true
 	
 }));
+
 app.locals.moment = require('moment');
 app.use(passport.initialize());
 app.use(passport.session());
@@ -116,7 +118,6 @@ app.get("/", function(req, res){
 			req.flash("error", err.message);
 			console.log (err);
 		} else {
-				console.log(allPosts.length);
 			res.render("landing", {posts: allPosts});
 		}
 	});

@@ -1,8 +1,7 @@
 <% include header  %>
-
-
 <h1 class="text-center wlc">WELCOME TO THE BIGGEST ID HUNTING</h1>
 <h4 class="text-center wlc2">Right where Shazam fails</h4>
+
 
 
 <div class="searchBox" style="margin-bottom: 50px; height: 300px; min-width: 100%">
@@ -26,37 +25,55 @@
 </div>
 
 
-<hr class="">
+
+<hr>
 
 <h1 class="text-center wlc2 mt-4 mb-5">LATEST POSTS FROM OUR USERS :)</h1>
 
 
 <div class="container">
 	<% for (var i=posts.length-1; i>=0; i--){ %>	
-	<div class="row-6">
+		<div class="row-6 post">
 			<div class="section">
 				<div class="col-6 order-1 mb-3 order-lg-1">
-			<%if (posts[i].link.includes("youtube")){%>
-			<iframe width="210%" height="200" src="<%=posts[i].link%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
-			<%}else if(posts[i].link.includes("soundcloud")){%>
-					<iframe width="210%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<%= posts[i].link%>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
-					</iframe>
-			<%}else if (posts[i].link.includes("facebook")){ %>
-				<iframe src="https://www.facebook.com/plugins/video.php?href=<%= posts[i].link%>&show_text=0&width=560" width="210%" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
-			<% }else {%>
-				<iframe src="<%=posts[i].link%>" width="210%" height="200" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
-			<%}%>
-		</div>
+					<%if (posts[i].link.includes("youtube")){%>
+					<iframe width="210%" height="200" src="<%=posts[i].link%>" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
+					<%}else if(posts[i].link.includes("soundcloud")){%>
+							<iframe width="210%" height="200" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=<%= posts[i].link%>&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
+							</iframe>
+					<%}else if (posts[i].link.includes("facebook")){ %>
+						<iframe src="https://www.facebook.com/plugins/video.php?href=<%= posts[i].link%>&show_text=0&width=560" width="210%" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+					<% }else {%>
+		    				<iframe src="<%= posts[i].link%>"width="210%" height="200"></iframe> 
+		    				<p>This seems not to be working properly. Click bellow to see the page.</p>
+		    				<button class="btn btn-outline-dark"><a href="<%= posts[i].link%>">Click here to go to the page</a></button>
+					<%}%>
+				</div>
 					<a href="/show/<%= posts[i]._id %>"><h2> 
 						<%= posts[i].artist %> <strong> - </strong> 
 						<%= posts[i].title %></h2></a>
 				<p class="col-12 px-0 content2"> <%= posts[i].content %></p>
 				<p>Submitted by <%= posts[i].username%> - <%= moment(posts[i].createdAt).fromNow()%></p>
-				<hr>
 			</div>
-		<% }; %>
-		<a href="/viewAll"><button class="btn btn-sm btn-outline-dark mb-3">View more</button></a>
-	</div>
+				<hr>
+		</div>
+	<% }; %>
+	<button class="btn btn-sm btn-outline-dark mb-3" id="more">View more</button>
 </div>
+
+<script type="text/javascript">
+
+$(function(){
+    $(".post").slice(0, 10).show(); // select the first ten
+    $("#more").click(function(e){ // click event for load more
+        e.preventDefault();
+        $(".post:hidden").slice(0,10).show(); // select next 10 hidden divs and show them
+    });
+});
+
+</script>
+
+
+
 
 <% include footer %>

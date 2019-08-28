@@ -19,23 +19,23 @@ var userSchema = new mongoose.Schema ({
 			ref: "Post"
 		}
 
+	],
+
+	collectionBasket : [
+		{
+			type : mongoose.Schema.Types.ObjectId,
+			ref: "Post"
+		}
+
+	],
+
+	favourites : [
+		{
+			type : mongoose.Schema.Types.ObjectId,
+			ref: "Post"
+		}
+
 	]
-
-	// collection : [
-	// 	{
-	// 		type : mongoose.Schema.Types.ObjectId,
-	// 		ref: "Post"
-	// 	}
-
-	// ]
-
-	// favourites : [
-	// 	{
-	// 		type : mongoose.Schema.Types.ObjectId,
-	// 		ref: "Post"
-	// 	}
-
-	// ]
 });
 
 
