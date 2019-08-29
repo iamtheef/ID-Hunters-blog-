@@ -21,14 +21,6 @@ var userSchema = new mongoose.Schema ({
 
 	],
 
-	collectionBasket : [
-		{
-			type : mongoose.Schema.Types.ObjectId,
-			ref: "Post"
-		}
-
-	],
-
 	favourites : [
 		{
 			type : mongoose.Schema.Types.ObjectId,

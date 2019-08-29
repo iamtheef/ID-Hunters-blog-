@@ -83,7 +83,7 @@ app.post("/register", function(req, res){
 			return res.redirect("/register");
 		}
 		passport.authenticate("local")(req,res, function(){
-			req.flash("success", "Welcome the the Vinyl DB");
+			req.flash("success", "Welcome to ID Hunters!");
 			res.redirect("/");
 		});
 	});
@@ -327,8 +327,8 @@ app.get ("/:id/favs", isLoggedIn, (req, res)=>{
 
 //add favourite ===========
 
-app.post("/:id/favs/:post/", isLoggedIn, (req, res)=>{
-	User.findById(req.params.id, (err, user)=>{
+app.post("/favs/:post/", isLoggedIn, (req, res)=>{
+	User.findById(req.user.id, (err, user)=>{
 		if (err){
 			req.flash("error", "There was an error.");
 			res.redirect("/show/"+req.params.post);
@@ -348,20 +348,44 @@ app.post("/:id/favs/:post/", isLoggedIn, (req, res)=>{
 	});
 });
 
+
+
 //remove favourite =========
+
 app.post("/favs/:post/remove", isLoggedIn, (req,res)=>{
 	User.findById(req.user._id, (err, user)=>{
 		if(err){
-			req.flash("error, There was an error");
+			req.flash("error", "There was an error");
 			res.redirect("/"+req.user._id+"/favs");
 		}else {
 			User.updateOne({_id:req.user._id},{$pull:{favourites: req.params.post}},{multi:false},  (err)=>{
 			if (err){
-				req.flash("error, There was an error");
+				req.flash("error", "There was an error");
 			res.redirect("/"+req.user._id+"/favs");
 			}else {
-				req.flash("Post removed from your favourites!");
+				req.flash("success","Post removed from your favourites!");
 				res.redirect("/"+req.user._id+"/favs")
+			}
+			});
+		}
+	});
+});
+
+//remove from the post page ====
+
+app.post("/favs/:post/remove/post", isLoggedIn, (req,res)=>{
+	User.findById(req.user._id, (err, user)=>{
+		if(err){
+			req.flash("error", "There was an error");
+			res.redirect("/"+req.user._id+"/favs");
+		}else {
+			User.updateOne({_id:req.user._id},{$pull:{favourites: req.params.post}},{multi:false},  (err)=>{
+			if (err){
+				req.flash("error", "There was an error");
+			res.redirect("/"+req.user._id+"/favs");
+			}else {
+				req.flash("success", "Post removed from your favourites!");
+				res.redirect("/show/"+req.params.post)
 			}
 			});
 		}

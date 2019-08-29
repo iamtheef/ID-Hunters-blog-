@@ -28,19 +28,26 @@
 
 <% if(currentUser){ %>
 	<div class="row ml-1">
-			<form action="/<%=currentUser._id%>/wishlist" method="post" style="margin-right: 5px;">
-				<button class="btn btn-sm btn-outline-grey" style="border:1px solid">
-					<img src="https://image.flaticon.com/icons/png/512/23/23912.png" width="20"></button>
+			<form action="/<%=currentUser._id%>/wishlist" method="post" 
+						style="margin-right: 7px;">
+				<input type="image" src="https://image.flaticon.com/icons/png/512/23/23912.png" width="25">
 			</form>
 
 
-			<form action="/<%=currentUser._id%>/favs/<%=post._id %>/" method="post">
-			<button type="sumbit" class="btn btn-sm btn-outline-grey" 
-							style="padding: 0; width:38px; height: 32px; border:1px solid">
-				<img src="https://cdn2.iconfinder.com/data/icons/media-player-ui/512/Media-Icon-25-512.png" 
-						id = heart class="fa fa-heart-o"aria-hidden="true" width="30">
-				</button>
+		
+			<%if (currentUser.favourites.includes(post._id)){%>
+			<form action="/favs/<%=post._id%>/remove/post" method="post">
+				<input type="image" src="https://icon-library.net/images/red-heart-icon-png/red-heart-icon-png-12.jpg" width="42" style="margin-top: 3px; margin-left: -6px">
 			</form>
+			<%}else{%>
+			<form action="/favs/<%=post._id %>/" method="post">
+				<input type="image" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-heart-outline-512.png" width="28">
+			</form>
+			<%}%>
+		
+					
+			
+			
 		
 	</div>
 <%}%>
