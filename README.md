@@ -21,7 +21,7 @@ change password
 
 
 You can find an improvised walkthrough in the links below : 
-admin account with rights : shorturl.at/gqrOS
+admin account with rights : ./shorturl.at/gqrOS
 search : shorturl.at/eorEV
 comments and favourites : shorturl.at/bhiyA
 posts: shorturl.at/ckrwI
