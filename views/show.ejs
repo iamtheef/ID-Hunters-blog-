@@ -30,18 +30,20 @@
 	<div class="row ml-1">
 			<form action="/<%=currentUser._id%>/wishlist" method="post" 
 						style="margin-right: 7px;">
-				<input type="image" src="https://image.flaticon.com/icons/png/512/23/23912.png" width="25">
+				<input type="image" src="https://image.flaticon.com/icons/png/512/23/23912.png" width="25"
+						data-toggle="tooltip" data-placement="top" title="Add to watchlist">
 			</form>
 
 
 		
 			<%if (currentUser.favourites.includes(post._id)){%>
 			<form action="/favs/<%=post._id%>/remove/post" method="post">
-				<input type="image" src="https://icon-library.net/images/red-heart-icon-png/red-heart-icon-png-12.jpg" width="42" style="margin-top: 3px; margin-left: -6px">
+				<input type="image" src="https://icon-library.net/images/red-heart-icon-png/red-heart-icon-png-12.jpg" width="42" style="margin-top: 3px; margin-left: -6px"
+				data-toggle="tooltip" data-placement="top" title="Remove from favourites">
 			</form>
 			<%}else{%>
 			<form action="/favs/<%=post._id %>/" method="post">
-				<input type="image" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-heart-outline-512.png" width="28">
+				<input type="image" src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-heart-outline-512.png" width="28" data-toggle="tooltip" data-placement="top" title="Add to favourites">
 			</form>
 			<%}%>
 		
@@ -114,17 +116,9 @@
 <hr style="margin-bottom: 50px;">
 
 <script type="text/javascript">
-$(document).ready(function(){
-  $("#heart").click(function(){
-    if($("#heart").hasClass("liked")){
-      $("#heart").html('<i class="fa fa-heart-o" aria-hidden="true"></i>');
-      $("#heart").removeClass("liked");
-    }else{
-      $("#heart").html('<i class="fa fa-heart" aria-hidden="true"></i>');
-      $("#heart").addClass("liked");
-    }
-  });
-});
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
 </script>
 
 <%include footer%>

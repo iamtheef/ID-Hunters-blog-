@@ -124,8 +124,6 @@ app.get("/", function(req, res){
 });
 
 
-
-
 // CREATE & DELETE ================================================================
 
 app.get ("/:id/new", isLoggedIn, function (req, res){
@@ -232,7 +230,7 @@ app.post("/show/:id/edit", isLoggedIn, function (req,res){
 //SEARCH ============================================================================
 
 app.get ("/search", function(req,res){
-	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=<keyremoved>&format=json&album="+req.query.term, function(error, response, body){
+	request("http://ws.audioscrobbler.com/2.0/?method=album.search&api_key=<removed>&format=json&album="+req.query.term, function(error, response, body){
 		if(!error && response.statusCode == 200){
 			var data = JSON.parse(body)
 			res.render ("search", {data: data});
