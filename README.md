@@ -5,15 +5,15 @@ A basic blog setup which allows users to find underground music ids (title/artis
 The blog is created with mongodb , nodejs , express for the back end and html/css templates for the front end.
 Each user has the following actions in their desposal :
 
-register
-login/logout
-comment (edit/delete)
-make a new post (edit/delete)
-like/unlike other people's posts
-watch/unwatch other people's posts
-search records based on lastfm's open api results
-set/change avatar
-change password
+* register
+* login/logout
+* comment (edit/delete)
+* make a new post (edit/delete)
+* like/unlike other people's posts
+* watch/unwatch other people's posts
+* search records based on lastfm's open api results
+* set/change avatar
+* change password
 
 
 
