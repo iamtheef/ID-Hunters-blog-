@@ -19,7 +19,7 @@ change password
 
 
 You can find an improvised walkthrough in the links below : 
-*Item [admin account with rights](http://shorturl.at/gqrOS)
-*Item [search](http://shorturl.at/eorEV)
-*Item [comments and favourites](http://shorturl.at/bhiyA)
-*Item [posts](http://shorturl.at/ckrwI)
+* [admin account with rights](http://shorturl.at/gqrOS)
+* [search](http://shorturl.at/eorEV)
+* [comments and favourites](http://shorturl.at/bhiyA)
+* [posts](http://shorturl.at/ckrwI)
