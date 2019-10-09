@@ -1,8 +1,9 @@
 # ID-Hunters-blog-
 
 A basic blog setup which allows users to find underground music ids (title/artist) asking other users that may know a specific id.
-
 The blog is created with mongodb , nodejs , express for the back end and html/css templates for the front end.
+
+
 Each user has the following actions in their desposal :
 
 * Register
