@@ -12,7 +12,7 @@ Each user has the following actions in their desposal :
 * Make a new post (edit/delete)
 * Like/Unlike other people's posts
 * Watch/unwatch other people's posts
-* Search records based on lastfm's open api results
+* Search records based on LastFM's open api results
 * Set/Change avatar
 * Change password
 
